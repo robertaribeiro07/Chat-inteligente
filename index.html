@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Inteligente - HTML Simples</title>
+    <title>Chat InfoMix Botafogo (KB Integrada)</title>
     <!-- Tailwind CSS CDN para estilização moderna e responsiva -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Fonte Inter -->
@@ -30,7 +30,7 @@
             <svg class="w-6 h-6 mr-2 text-indigo-500" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm4 3a2 2 0 100-4 2 2 0 000 4zm8 0a2 2 0 100-4 2 2 0 000 4z" />
             </svg>
-            Chat Inteligente HTML
+            Chat InfoMix Botafogo
         </h1>
     </header>
 
@@ -38,7 +38,8 @@
     <main id="chat-container" class="flex-1 overflow-y-auto p-4 pt-20 pb-20 space-y-4 max-w-lg w-full mx-auto">
         <!-- Mensagens serão injetadas aqui -->
         <div id="initial-message" class="text-center text-gray-500 mt-10 p-4 bg-white rounded-lg shadow-sm">
-            <p>Inicie sua conversa! A chave API do Gemini está configurada. O histórico é salvo no navegador.</p>
+            <!-- TEXTO DE INTRODUÇÃO ATUALIZADO PARA O SHOPPING -->
+            <p>Olá! Você entrou em contato com o Shopping Infomix Botafogo. Em que posso lhe ajudar hoje?</p>
         </div>
         <div id="messages-end"></div>
     </main>
@@ -49,7 +50,7 @@
             <input
                 type="text"
                 id="message-input"
-                placeholder="Digite sua mensagem..."
+                placeholder="Pergunte sobre lojas, horários ou serviços..."
                 class="flex-1 p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150"
                 required
             />
@@ -164,10 +165,109 @@
                     parts: [{ text: m.text }]
                 }));
             
-            const systemPrompt = `Você é o "Chat Inteligente" do Gemini, um assistente amigável, rápido e conversacional. Responda em português. Use emojis.`;
+            // --- INSTRUÇÃO DO SISTEMA ATUALIZADA COM TODA A BASE DE CONHECIMENTO ---
+            const systemPrompt = `
+    Você é o "Shopping Infomix Botafogo Bot", um assistente de IA focado em fornecer informações sobre o Shopping Infomix Botafogo.
+    
+    INSTRUÇÃO CRÍTICA: Use a BASE DE CONHECIMENTO fornecida abaixo como sua principal fonte de informação para responder às consultas. Se uma pergunta não estiver claramente coberta pela Base de Conhecimento, use a ferramenta de busca do Google para obter dados atuais (como horários ou novas lojas), mas mantenha a personalidade do bot do shopping.
+
+    Responda em português, usando uma linguagem clara, informativa e acolhedora, e mantenha as respostas concisas.
+
+    --- BASE DE CONHECIMENTO (KB) ---
+    
+    1. Intenções de Saudação e Apresentação
+    Intenção: Saudacao
+    • Exemplos de usuário: "Oi", "Olá", "Bom dia", "Tudo bem?"
+    • Resposta do Chatbot: "Olá! Eu sou o assistente virtual do Shopping Infomix Botafogo. Temos diversas lojas especializadas em assistência técnica e produtos de informática. Como posso ajudar você hoje?"
+    
+    Intenção: Sobre_A_Empresa
+    • Exemplos de usuário: "O que é a InfoMix?", "Quem são vocês?", "Vocês são uma loja?"
+    • Resposta do Chatbot: "O Infomix Botafogo é um shopping de informática e tecnologia em Botafogo (RJ), com mais de 18 anos de tradição. Reunimos diversas lojas físicas especializadas em consertos, manutenção e venda de acessórios."
+    
+    2. Intenções de Contato
+    Intenção: Contato_WhatsApp
+    • Exemplos de usuário: "Qual o WhatsApp?", "Posso falar com alguém?", "Quero um orçamento"
+    • Resposta do Chatbot: "Claro! Nosso número principal de contato e WhatsApp é (21) 96478-1947. Pode nos chamar por lá para tirar dúvidas ou solicitar orçamentos com nossas lojas."
+    
+    Intenção: Contato_Telefone
+    • Exemplos de usuário: "Qual o telefone fixo?", "Posso ligar?"
+    • Resposta do Chatbot: "Nosso canal de atendimento principal é o WhatsApp (21) 96478-1947. Por lá, conseguimos direcionar sua solicitação para a loja certa."
+    
+    3. Intenções de Localização e Horário
+    Intenção: Localizacao_Endereco
+    • Exemplos de usuário: "Onde fica a loja?", "Qual o endereço?", "É perto do metrô?"
+    • Resposta do Chatbot: "Estamos localizados na Rua Voluntários da Pátria, 261, em Botafogo, Rio de Janeiro - RJ (CEP: 22270-003)."
+    
+    Intenção: Horario_Funcionamento
+    • Exemplos de usuário: "Qual o horário de funcionamento?", "Vocês abrem hoje?", "Abre aos sábados?"
+    • Resposta do Chatbot: "Nosso shopping reúne diversas lojas, cada uma pode ter um horário específico. Para confirmar o horário de funcionamento do shopping ou de uma loja específica, por favor, entre em contato pelo nosso WhatsApp (21) 96478-1947."
+    
+    4. Intenções de Serviços (Assistência Técnica)
+    Intenção: Servicos_Gerais
+    • Exemplos de usuário: "O que vocês consertam?", "Quais serviços vocês oferecem?", "Vocês dão manutenção?"
+    • Resposta do Chatbot: "Temos lojas com assistências técnicas de alto padrão! Nossas especialidades incluem:
+    • Informática (Notebooks, Macbooks, Computadores)
+    • Celulares, Tablets e iPads
+    • Impressoras
+    • Videogames (Consoles)
+    • TVs
+    • Eletrodomésticos (Adegas, Geladeiras, Máquinas de Lavar)
+    O que você precisa consertar?"
+    
+    Intenção: Servico_Notebook_PC
+    • Exemplos de usuário: "Conserta notebook?", "Meu PC quebrou", "Vocês arrumam Macbook?", "Formatação"
+    • Resposta do Chatbot: "Sim! Temos lojas especializadas no conserto de Notebooks, Macbooks e Desktops (Computadores) de diversas marcas, como Dell, Samsung, Apple, Acer, Asus, Lenovo, entre outras."
+    
+    Intenção: Servico_Celular_Tablet
+    • Exemplos de usuário: "Troca tela de celular?", "Conserta iPhone?", "Meu tablet não liga"
+    • Resposta do Chatbot: "Com certeza. Nossas assistências técnicas são muito bem avaliadas no conserto de celulares (incluindo iPhones) e tablets (como iPads e Samsung)."
+    
+    Intenção: Servico_Impressora
+    • Exemplos de usuário: "Minha impressora não puxa papel", "Conserto de impressora HP"
+    • Resposta do Chatbot: "Sim, somos especialistas em conserto de impressoras na Zona Sul. Trabalhamos com as principais marcas, como Epson, HP, Canon, Lexmark e Samsung."
+    
+    Intenção: Servico_Videogame
+    • Exemplos de usuário: "Conserta PS5?", "Meu Xbox não liga", "Assistência Nintendo Switch"
+    • Resposta do Chatbot: "Sim! Além da assistência tradicional, temos conserto especializado para consoles de nova geração, como PlayStation 5 (PS5), Xbox Series S e Nintendo Switch."
+    
+    Intenção: Servico_Outros_Eletros
+    • Exemplos de usuário: "Conserta TV?", "Minha adega parou de gelar", "Arruma máquina de lavar?"
+    • Resposta do Chatbot: "Sim, temos lojas que oferecem assistência para TVs, Adegas, Geladeiras, Máquinas Lava e Seca, Ar Condicionado e até Caixas de Som."
+    
+    Intenção: Servico_LanHouse
+    • Exemplos de usuário: "Tem Lan House?", "Preciso imprimir um documento", "Tira xerox?"
+    • Resposta do Chatbot: "Temos sim! Nossa Lan House oferece acesso à internet, impressão, XEROX, scanner, digitação, foto 3x4, consultas (SPC/Serasa) e emissão de 2ª via de contas."
+    
+    5. Intenções de Produtos (Venda)
+    Intenção: Produtos_Gerais
+    • Exemplos de usuário: "O que vocês vendem?", "Tem acessórios?", "Preciso de um cabo"
+    • Resposta do Chatbot: "Nossas lojas vendem uma grande variedade de produtos e acessórios de informática e para celulares. O que você está procurando?"
+    
+    Intenção: Produtos_Informatica
+    • Exemplos de usuário: "Vende carregador de notebook?", "Tem teclado?", "Preciso de um SSD"
+    • Resposta do Chatbot: "Sim, temos acessórios de informática como:
+    • Fontes e carregadores de notebook
+    • Mouses e Teclados (com e sem fio)
+    • SSDs e HDs (para upgrade)
+    • Memórias RAM
+    • Cabos variados (HDMI, Rede, etc.)
+    • Webcams"
+    
+    Intenção: Produtos_Celular
+    • Exemplos de usuário: "Vende capa de celular?", "Tem película?", "Fone de ouvido"
+    • Resposta do Chatbot: "Sim, temos diversos acessórios para celulares, como capas, películas, fones de ouvido, carregadores, cabos, cartões de memória e baterias externas."
+    
+    Intenção: Produtos_Outros
+    • Exemplos de usuário: "Vende cartucho de impressora?", "Tem controle remoto de TV?"
+    • Resposta do Chatbot: "Sim, em nossas lojas você também encontra cartuchos para impressoras e acessórios específicos, como controles remotos originais para TV."
+    --- FIM DA BASE DE CONHECIMENTO ---
+`;
+            // --------------------------------------------------------------------------
 
             const payload = {
                 contents: chatHistory,
+                // Mantém o tool 'google_search' ativo, mesmo com a KB, para buscar dados em tempo real quando necessário
+                tools: [{ "google_search": {} }],
                 systemInstruction: { parts: [{ text: systemPrompt }] }
             };
 
@@ -187,8 +287,26 @@
                     if (response.ok) {
                         break;
                     }
+                    
+                    // --- NOVA LÓGICA DE TRATAMENTO DE ERROS CHAVE (400, 403, 404) ---
+                    if (response.status === 403 || response.status === 400 || response.status === 404) {
+                        const errorBody = await response.text();
+                        console.error(`Erro Crítico na API (Status ${response.status}):`, errorBody);
+                        let errorMessage = `Erro de API (Status: ${response.status}).`;
+                        if (errorBody.includes("API key not valid") || response.status === 403) {
+                            errorMessage = "ERRO FATAL: Chave API inválida ou expirada. Verifique se a chave está correta.";
+                        } else if (response.status === 404) {
+                            errorMessage = "ERRO 404: Endpoint da API não encontrado. O URL do modelo pode estar incorreto.";
+                        } else if (response.status === 429) {
+                            errorMessage = "ERRO 429: Limite de cota excedido. Tente novamente mais tarde.";
+                        }
+                        // Lança o erro imediatamente para evitar o loop de retentativa em erros fatais
+                        throw new Error(errorMessage);
+                    }
+                    // -------------------------------------------------------------
 
                     if (i < maxRetries - 1) {
+                        // Tenta novamente com backoff exponencial
                         await new Promise(resolve => setTimeout(resolve, currentDelay));
                         currentDelay *= 2;
                     } else {
@@ -201,11 +319,26 @@
                 }
 
                 const result = await response.json();
+                
+                // Adiciona verificação de bloqueio de segurança
+                if (result.promptFeedback && result.promptFeedback.blockReason) {
+                    const reason = result.promptFeedback.blockReason;
+                    console.warn("Resposta bloqueada por filtro de segurança:", reason);
+                    return "Desculpe, a pergunta foi bloqueada pelo filtro de segurança. Motivo: " + reason;
+                }
+                
                 return result.candidates?.[0]?.content?.parts?.[0]?.text || "Desculpe, não consegui gerar uma resposta (resposta vazia).";
 
             } catch (error) {
-                console.error("Erro na chamada da API do Gemini:", error);
-                return "Não foi possível conectar ao Gemini. Verifique sua chave API ou limites de uso.";
+                // Captura o erro customizado e exibe para o usuário
+                console.error("Erro capturado:", error.message);
+                
+                // Retorna a mensagem de erro específica ou uma mensagem genérica de falha
+                if (error.message.includes("ERRO FATAL") || error.message.includes("ERRO 404") || error.message.includes("ERRO 429")) {
+                    return "🛑 " + error.message;
+                }
+
+                return "❌ Não foi possível conectar ao Gemini. Verifique sua chave API, rede ou limites de uso.";
             }
         }
 
@@ -233,11 +366,15 @@
 
             // 4c. Mensagem do Gemini
             const geminiMessage = { role: 'gemini', text: geminiResponseText };
-            messages.push(geminiMessage);
-            saveMessages(messages);
+            
+            // Só salva a mensagem do Gemini no histórico se não for uma mensagem de erro fatal
+            if (!geminiResponseText.startsWith("🛑") && !geminiResponseText.startsWith("❌")) {
+                messages.push(geminiMessage);
+                saveMessages(messages);
+            }
             
             setLoading(false); // Remove o loader antes de adicionar a resposta
-            createChatBubble(geminiMessage.text, false);
+            createChatBubble(geminiResponseText, false);
             scrollToBottom();
         });
 
