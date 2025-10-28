@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 // --- Variáveis Globais OBRIGATÓRIAS do Canvas ---
 // A chave e a URL da API do Gemini são necessárias
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent";
-const API_KEY = ""; // A chave será fornecida pelo Canvas
+const API_KEY = "AIzaSyA536J-fUKm26IYCwNqCggEJ9JCwj-glNc"; // A chave será fornecida pelo Canvas
 
 // Componente principal do Chat
 const App = () => {
